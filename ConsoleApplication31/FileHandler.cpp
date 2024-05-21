@@ -4,25 +4,34 @@
 #include<fstream>
 using namespace std;
 void FileHandler::saveToFile() {
-    addRecord();
-    ofstream outFile("record.txt", ios::app);
-    outFile << "\nName:\t\t" << name << "\nTask Duration :\t" << taskduration << "\nAddress :\t" << address
-        << "\nDate and Time:\t" << datetime << "\n\n";
-    outFile.close();
-    cout << "the record is saved successfuly to the file\n\n";
+	ofstream outFile("record.txt", ios_base::app);
+	outFile << "\nName: " << name << endl << "Task duration: " << taskduration << endl << "Address: " << address << endl << "Date: " << date << endl << "Time: " << time << endl;
+	outFile.close();
 }
 void FileHandler::readFromFile() {
-    ifstream inFile("record.txt");
-    string line;
-    while (getline(inFile, line)) {
-        cout << line << endl;
-    }
-    inFile.close();
+	ifstream input;
+	input.open("record.txt");
+	string line;
+	bool found = false;
+	while (!input.eof()) {
+		while (getline(input, line)) {
+			if (line.find("Name: " + name) != string::npos) {
+				found = true;
+				cout << "The recored named " << name << " : " << endl;
+				for (int i = 0; i < 3; ++i) {
+					if (!getline(input, line))
+						break;
+					cout << line << endl;
+				}
+				break;
+			}
+		}
+		if (found == false) {
+			cout << "Name is not found" << endl;
+		}
+	}
+	input.close();
 }
 void FileHandler::updateFile() {
-    ofstream outFile("record.txt", ios::app);
-    outFile << "\nName:\t\t" << name << "\nTask Duration :\t" << taskduration << "\nAddress :\t" << address
-        << "\nDate and Time:\t" << datetime << "\n\n";
-    outFile.close();
-    cout << "the file is updated successfully\n\n";
+
 }
