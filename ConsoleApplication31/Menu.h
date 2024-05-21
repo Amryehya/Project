@@ -3,10 +3,10 @@
 #include<string>
 #ifndef Menu_h
 #define Menu_h
-#include "RecordManager.h"
 #include "FileHandler.h"
+#include "PasswordManager.h"
 using namespace std;
-class Menu : public FileHandler
+class Menu : public PasswordManager, public FileHandler
 {
 public:
 	void displayMainMenu();
