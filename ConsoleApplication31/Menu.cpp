@@ -1,43 +1,111 @@
 #include "Menu.h"
 #include <iostream>
+#include <fstream>
 #include<string>
 using namespace std;
 
 void Menu::displayMainMenu() {
-	cout << "Main menu\n" << "1.Add a new record\n2.view the record list\n3.Edit the existing record\n4.Delete the record";
-	cout << "\n5.Close the program\n";
+	
+	cout << "\nMain Menu\n1.Add a new record\n2.view all records\n3.view record by name\n4.Edit records\n5.Delete a record";
+	cout << "\n6.Close the program\n";
 }
 void Menu::displayRecordList() {
-	readFromFile();
+	ifstream inFile("record.txt");
+	string line;
+	cout << endl;
+	while (getline(inFile, line)) {
+		cout << line << endl;
+	}
+	inFile.close();;
 }
 void Menu::getUserChoice() {
+	string pass;
+	string get;
+	cout << "please set a password\n";
+	cin >> pass;
+	setPassword(pass);
+	system("cls");
+	displayMainMenu();
 	int x;
 	cout << "Enter the desired option : ";
 	cin >> x;
-	while (x != 5) {
+	system("cls");
+	while (x != 6) {
 		switch (x) {
-		case 1:
-			saveToFile();
+		case 1: 
+			cout << "please enter password:";
+			cin >> get;
+			system("cls");
+			if (get == getPassword()) {
+				addRecord();
+				saveToFile();
+			}
+			else {
+				cout << "\nwrong password\n";
+			}
 			break;
 		case 2:
-			displayRecordList();
+			cout << "please enter password:";
+			cin >> get;
+			system("cls");
+			if (get == getPassword()) {
+				displayRecordList();
+			}
+			else {
+				cout << "\nwrong password\n";
+			}
 			break;
 		case 3:
-			editrecord();
-			updateFile();
+			cout << "please enter password:";
+			cin >> get;
+			system("cls");
+			if (get == getPassword()) {
+				cout << "Enter the name of record you want to view: ";
+				cin.ignore();
+				getline(cin, name);
+				readFromFile();
+			}
+			else {
+				cout << "\nwrong password\n";
+			}
 			break;
 		case 4:
-			deleterecord();
-			updateFile();
+			cout << "please enter password:";
+			cin >> get;
+			system("cls");
+			if (get == getPassword()) {
+				cout << "Enter the name of record you want to edit: ";
+				cin.ignore();
+				getline(cin, name);
+				editrecord();
+			}
+			else {
+				cout << "\nwrong password\n";
+			}
 			break;
 		case 5:
-			cout << "exit program\n";
-			cout << "Press any key to close this window . . .";
+			cout << "please enter password:";
+			cin >> get;
+			system("cls");
+			if (get == getPassword()) {
+				cout << "Enter the name of record you want to delete: ";
+				cin.ignore();
+				getline(cin, name);
+				deleterecord();
+			}
+			else {
+				cout << "\nwrong password\n";
+			}
 			break;
+		case 6:
+			cout << "exit program";
+			break;
+		
 		}
 		displayMainMenu();
 		cout << "Enter the desired option : ";
 		cin >> x;
+		system("cls");
 	}
 
 
